@@ -13,8 +13,7 @@ class StationController extends Controller
     public function index()
     {
         //
-        $stations = Station::all(); // You can use paginate() if needed
-
+        $stations = Station::latest()->paginate(10);
         return view('stations.index', compact('stations'));
     }
 
@@ -24,6 +23,7 @@ class StationController extends Controller
     public function create()
     {
         //
+        return view('stations.create');
     }
 
     /**
@@ -32,37 +32,34 @@ class StationController extends Controller
     public function store(Request $request)
     {
         //
+         $request->validate(['name' => 'required|string|max:255']);
+         Station::create($request->only('name', 'description'));
+        return redirect()->route('stations.index')->with('success', 'Station created!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
+    public function edit($id) {
+        $station = Station::findOrFail($id);
+        return view('stations.edit', compact('station'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+    public function update(Request $request, $id) {
+        $station = Station::findOrFail($id);
+        $request->validate(['name' => 'required|string|max:255']);
+        $station->update($request->only('name', 'description'));
+        return redirect()->route('stations.index')->with('success', 'Station updated!');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+    public function show($id) {
+        $station = Station::findOrFail($id);
+        return view('stations.show', compact('station'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+    public function destroy($id) {
+        $station = Station::findOrFail($id);
+        $station->delete();
+        return redirect()->route('stations.index')->with('success', 'Station deleted!');
     }
 }

@@ -40,6 +40,7 @@
       integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI="
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{ asset('assets/dist/css/adminlte.css') }}">
@@ -76,7 +77,9 @@
        @include('layouts.sidebar')
 
       <!--begin::App Main-->
+        <div class="app-main pt-5">
         @yield('content')
+        </div>
       <!--end::App Main-->
       <!--begin::Footer-->
       <footer class="app-footer">

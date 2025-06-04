@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stations', function (Blueprint $table) {
+        Schema::create('fuel_prices', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('description')->nullable();
+            $table->decimal('price_in_ETB', 10, 2);
+            $table->foreignId('fuel_id')->constrained()->onDelete('cascade');
+            $table->date('date');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stations');
+        Schema::dropIfExists('fuel_prices');
     }
 };

@@ -1,16 +1,10 @@
 @extends('layouts.myapp')
 
-@section('title', 'Stations Page')
+@section('title', 'Measurements Page')
 
 @section('content')
-<!--begin::App Main-->
 <main class="app-main">
-
-    <!--begin::App Content Header-->
     <div class="app-content-header"></div>
-    <!--end::App Content Header-->
-
-    <!--begin::App Content-->
     <div class="app-content">
         <div class="container-fluid">
 
@@ -19,14 +13,13 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-sm-6"><h3 class="card-title">Station List</h3></div>
-                                <div class="col-sm-6 card-title text-end">
-                                    <a href="{{ route('stations.create') }}" class="btn btn-primary">
+                                <div class="col-sm-6"><h3 class="card-title">Measurement List</h3></div>
+                                <div class="col-sm-6 text-end">
+                                    <a href="{{ route('measurements.create') }}" class="btn btn-primary">
                                         <i class="fas fa-plus-circle"></i> Create New
                                     </a>
                                 </div>
                             </div>
-
                         </div>
 
                         <div class="card-body p-0">
@@ -40,22 +33,22 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($stations as $station)
+                                    @forelse($measurements as $measurement)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $station->name }}</td>
-                                            <td>{{ $station->description }}</td>
+                                            <td>{{ $measurement->name }}</td>
+                                            <td>{{ $measurement->description }}</td>
                                             <td>
-                                                <a href="{{ route('stations.show', $station->id) }}" class="btn btn-sm btn-info" title="View">
+                                                <a href="{{ route('measurements.show', $measurement->id) }}" class="btn btn-sm btn-info">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('stations.edit', $station->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                                <a href="{{ route('measurements.edit', $measurement->id) }}" class="btn btn-sm btn-warning">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('stations.destroy', $station->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                                <form action="{{ route('measurements.destroy', $measurement->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger" title="Delete">
+                                                    <button type="submit" class="btn btn-sm btn-danger">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </form>
@@ -63,7 +56,7 @@
                                         </tr>
                                     @empty
                                         <tr>
-                                            <td colspan="4" class="text-center">No stations found.</td>
+                                            <td colspan="4" class="text-center">No measurements found.</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -71,7 +64,7 @@
                         </div>
 
                         <div class="card-footer d-flex justify-content-end">
-                            {{ $stations->links() }}
+                            {{ $measurements->links() }}
                         </div>
                     </div>
                 </div>
@@ -79,8 +72,5 @@
 
         </div>
     </div>
-    <!--end::App Content-->
-
 </main>
-<!--end::App Main-->
 @endsection

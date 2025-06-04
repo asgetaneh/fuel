@@ -19,9 +19,9 @@
                     <div class="card mb-4">
                         <div class="card-header">
                             <div class="row">
-                                <div class="col-sm-6"><h3 class="card-title">Station List</h3></div>
+                                <div class="col-sm-6"><h3 class="card-title">Vehicle types List</h3></div>
                                 <div class="col-sm-6 card-title text-end">
-                                    <a href="{{ route('stations.create') }}" class="btn btn-primary">
+                                    <a href="{{ route('vehicle-types.create') }}" class="btn btn-primary">
                                         <i class="fas fa-plus-circle"></i> Create New
                                     </a>
                                 </div>
@@ -40,19 +40,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse($stations as $station)
+                                    @forelse($types as $station)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $station->name }}</td>
                                             <td>{{ $station->description }}</td>
                                             <td>
-                                                <a href="{{ route('stations.show', $station->id) }}" class="btn btn-sm btn-info" title="View">
+                                                <a href="{{ route('vehicle-types.show', $station->id) }}" class="btn btn-sm btn-info" title="View">
                                                     <i class="fas fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('stations.edit', $station->id) }}" class="btn btn-sm btn-warning" title="Edit">
+                                                <a href="{{ route('vehicle-types.edit', $station->id) }}" class="btn btn-sm btn-warning" title="Edit">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('stations.destroy', $station->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                                <form action="{{ route('vehicle-types.destroy', $station->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger" title="Delete">
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="card-footer d-flex justify-content-end">
-                            {{ $stations->links() }}
+                            {{ $types->links() }}
                         </div>
                     </div>
                 </div>

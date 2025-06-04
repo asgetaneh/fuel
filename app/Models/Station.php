@@ -9,4 +9,10 @@ class station extends Model
 {
     /** @use HasFactory<\Database\Factories\StationFactory> */
     use HasFactory;
+
+    protected $fillable = [
+    'name',
+    'description',
+    'is_active',
+];
 }
