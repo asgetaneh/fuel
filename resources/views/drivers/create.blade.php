@@ -29,7 +29,7 @@
                                 <select name="vehicle_type_id" class="form-control" >
                                     <option value=" " disabled  >{{ "Select your offices" }}</option>
                                     @foreach ($offices as $office)
-                                    <option value="{{ $office->id }}">{{ $type->office }}</option>
+                                    <option value="{{ $office->id }}">{{ $office->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

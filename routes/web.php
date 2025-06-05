@@ -11,6 +11,10 @@ use App\Http\Controllers\VehiclePerformanceController;
 use App\Http\Controllers\MeasurementController;
 use App\Http\Controllers\FuelController;
 use App\Http\Controllers\FuelPriceController;
+use App\Http\Controllers\TripController;
+use App\Http\Controllers\FuelRequestReasonController;
+use App\Http\Controllers\StationFuelStoredController;
+use App\Http\Controllers\FuelRequestController;
 
 
 Route::get('/', function () {
@@ -28,15 +32,20 @@ Route::middleware('auth')->group(function () {
 
 
 
-     Route::resource('stations', StationController::class);
-     Route::resource('vehicle-types', VehicleTypeController::class);
-     Route::resource('drivers', DriverController::class);
-     Route::resource('vehicles', VehicleController::class);
-     Route::resource('offices', controller: OfficeController::class);
-     Route::resource('vehicle-performances', VehiclePerformanceController::class);
-     Route::resource('measurements', MeasurementController::class);
-     Route::resource('fuels', FuelController::class);
+    Route::resource('stations', StationController::class);
+    Route::resource('vehicle-types', VehicleTypeController::class);
+    Route::resource('drivers', DriverController::class);
+    Route::resource('vehicles', VehicleController::class);
+    Route::resource('offices', controller: OfficeController::class);
+    Route::resource('vehicle-performances', VehiclePerformanceController::class);
+    Route::resource('measurements', MeasurementController::class);
+    Route::resource('fuels', FuelController::class);
     Route::resource('fuel-prices', FuelPriceController::class);
+    Route::resource('trips', TripController::class);
+    Route::resource('fuel-request-reasons', FuelRequestReasonController::class);
+    Route::resource('station-fuel-storeds', StationFuelStoredController::class);
+    Route::resource('fuel-requests', FuelRequestController::class);
+
 
 
 

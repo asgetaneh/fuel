@@ -20,8 +20,7 @@ class DriverController extends Controller
 public function create()
 {
     $offices = Office::all();
-    $offices = Office::all();
-    return view('drivers.create', compact('offices'));
+     return view('drivers.create', compact('offices'));
 }
 
 public function store(Request $request)

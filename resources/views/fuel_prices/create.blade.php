@@ -4,7 +4,7 @@
 @section('title', 'Create Fuel Price')
 
 @section('content')
-<main class="app-main">
+<main class="app-main pt-5">
     <div class="app-content">
         <div class="container-fluid">
             <div class="row">
