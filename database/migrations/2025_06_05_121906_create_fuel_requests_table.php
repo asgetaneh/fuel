@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('service_reason_id')->constrained('fuel_request_reasons')->onDelete('restrict');
             $table->foreignId('requested_by')->constrained('users')->onDelete('restrict');
             $table->foreignId('approved_by')->nullable()->constrained('users')->onDelete('set null');
+            $table->integer('status')->default(0); // 0: pending, 1: approved, 2,: fullfilled, 3: rejected
             $table->text('notes')->nullable();
             $table->timestamps();
         });

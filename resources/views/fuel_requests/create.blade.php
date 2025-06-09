@@ -3,7 +3,7 @@
 @section('title', 'Create Fuel Request')
 
 @section('content')
-<main class="app-main">
+<main class="app-main pt-5">
     <div class="app-content">
         <div class="container-fluid">
             <div class="card mb-4">
@@ -60,7 +60,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="service_reason_id" class="form-label">Service Reason</label>
+                            <label for="service_reason_id" class="form-label">  Reason</label>
                             <select name="service_reason_id" class="form-control">
                                 <option value="">Select Reason</option>
                                 @foreach($reasons as $reason)

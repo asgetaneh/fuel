@@ -1,6 +1,10 @@
 @php
     $isVehicleMenu = request()->routeIs('vehicle-types.index', 'vehicles.index', 'vehicle-performances.index', 'drivers.index');
-    $isFuelMenu = request()->routeIs('stations.index', 'measurements.index', 'fuels.index', 'fuel-prices.index', 'fuel-request-reasons.index', 'station-fuel-storeds.index', 'fuel-requests.index');
+    $isFuelMenu = request()->routeIs('stations.index', 'measurements.index',
+     'fuels.index', 'fuel-prices.index', 'fuel-request-reasons.index',
+      'station-fuel-storeds.index','station-fuel-storeds.create','station-fuel-storeds.edit', 'station-fuel-storeds.show',
+     'fuel-requests.index', 'fuel-requests.create', 'fuel-requests.edit', 'fuel-requests.show',
+      'fuel-distributes.index','fuel-distributes.create', 'fuel-distributes.edit', 'fuel-distributes.show');
     $isSettingsMenu = $isVehicleMenu || $isFuelMenu || request()->routeIs('offices.index', 'trips.index');
     $isReportMenu = request()->routeIs('report.index'); // update if more reports
     $isUserMenu = request()->routeIs('users.index'); // update if user pages added
@@ -123,6 +127,12 @@
                                     <a href="{{ route('fuel-requests.index') }}" class="nav-link {{ request()->routeIs('fuel-requests.index') ? 'active' : '' }}">
                                         <i class="fas fa-gas-pump"></i>
                                         <p>Fuel request</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('fuel-distributes.index') }}" class="nav-link {{ request()->routeIs('fuel-fuel-distributes.index') ? 'active' : '' }}">
+                                        <i class="fas fa-gas-pump"></i>
+                                        <p>Fuel distribution</p>
                                     </a>
                                 </li>
 

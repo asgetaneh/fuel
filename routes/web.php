@@ -15,6 +15,7 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\FuelRequestReasonController;
 use App\Http\Controllers\StationFuelStoredController;
 use App\Http\Controllers\FuelRequestController;
+use App\Http\Controllers\FuelDistributesController;
 
 
 Route::get('/', function () {
@@ -45,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('fuel-request-reasons', FuelRequestReasonController::class);
     Route::resource('station-fuel-storeds', StationFuelStoredController::class);
     Route::resource('fuel-requests', FuelRequestController::class);
+    Route::resource('fuel-distributes', FuelDistributesController::class);
 
 
 

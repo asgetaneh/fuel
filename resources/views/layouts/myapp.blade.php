@@ -260,6 +260,7 @@
       sales_chart.render();
     </script>
     <!--end::Script-->
+    @stack('scripts')
   </body>
   <!--end::Body-->
 </html>
