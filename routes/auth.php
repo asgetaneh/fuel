@@ -56,4 +56,20 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+    Route::get('logout', [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout');
+
 });
+
+
+Route::get('/ldap-test', function () {
+    try {
+        $connection = LdapRecord\Container::getDefaultConnection();
+        $connection->connect();
+
+        return '✅ LDAP connected successfully!';
+    } catch (\Exception $e) {
+        return '❌ LDAP connection failed: ' . $e->getMessage();
+    }
+});
+

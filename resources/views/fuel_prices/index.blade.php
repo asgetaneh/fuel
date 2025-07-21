@@ -24,6 +24,7 @@
                                         <th>#</th>
                                         <th>Fuel</th>
                                         <th>Price (ETB)</th>
+                                        <th>Created Date</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Actions</th>
@@ -33,9 +34,10 @@
                                     @forelse($fuelPrices as $fuelPrice)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $fuelPrice->fuel->name }}</td>
+                                            <td> <b>{{ $fuelPrice->fuel->name }}</b>{{" ( in "}}{{ $fuelPrice->fuel->measurement->name ?? '-' }}{{")"}}</td>
                                             <td>{{ $fuelPrice->price_in_ETB }}</td>
-                                            <td>{{ $fuelPrice->date }}</td>
+                                            <td>{{ $fuelPrice->created_at }}</td>
+                                            <td>{{ $fuelPrice->updated_at }}</td>
                                             <td>
                                                 <span class="badge bg-{{ $fuelPrice->is_active ? 'success' : 'secondary' }}">
                                                     {{ $fuelPrice->is_active ? 'Active' : 'Inactive' }}

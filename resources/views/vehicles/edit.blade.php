@@ -35,14 +35,14 @@
                 </div>
 
                 <div class="mb-3">
-                  <label for="registration_number" class="form-label">Registration Number</label>
+                  <label for="registration_number" class="form-label">Plate(side) Number</label>
                   <input type="text" name="registration_number" value="{{ $vehicle->registration_number }}" class="form-control">
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                   <label for="engine_number" class="form-label">Engine Number</label>
                   <input type="text" name="engine_number" value="{{ $vehicle->engine_number }}" class="form-control">
-                </div>
+                </div> --}}
 
                 <div class="mb-3">
                   <label for="total_seat" class="form-label">Total Seats</label>

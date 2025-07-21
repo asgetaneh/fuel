@@ -42,7 +42,7 @@
                                     @forelse($performances as $performance)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $performance->vehicle->name }}</td>
+                                            <td>{{ $performance->vehicle->registration_number }} {{"("}}{{$performance->vehicle->name ?? '-' }}{{")"}}</td>
                                             <td>{{ $performance->average_distance_km_per_hr }}</td>
                                             <td>{{ $performance->average_km_per_litter }}</td>
                                             <td>{{ $performance->speed_per_km_hr }}</td>

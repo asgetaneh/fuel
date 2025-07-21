@@ -3,7 +3,7 @@
 @section('title', 'Offices Page')
 
 @section('content')
-<main class="app-main">
+<main class="app-main pt-5">
     <div class="app-content">
         <div class="container-fluid">
 
@@ -27,6 +27,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
+                                        <th>Description</th>
                                         <th>Parent Office</th>
                                         <th>Manager</th>
                                         <th>Actions</th>
@@ -37,6 +38,7 @@
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $office->name }}</td>
+                                            <td>{{ $office->description ?? '-' }}</td>
                                             <td>{{ $office->parentOffice?->name ?? '-' }}</td>
                                             <td>{{ $office->manager?->name ?? '-' }}</td>
                                             <td>

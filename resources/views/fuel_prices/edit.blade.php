@@ -32,10 +32,10 @@
                                     <input type="number" name="price_in_ETB" id="price_in_ETB" class="form-control" step="0.01" value="{{ $fuelPrice->price_in_ETB }}" required>
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="date" class="form-label">Date</label>
                                     <input type="date" name="date" id="date" class="form-control" value="{{ $fuelPrice->date }}" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-check mb-3">
                                     <input class="form-check-input" type="checkbox" name="is_active" id="is_active" {{ $fuelPrice->is_active ? 'checked' : '' }}>

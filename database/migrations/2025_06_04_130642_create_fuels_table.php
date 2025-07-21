@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('fuels', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
+            $table->string('description')->nullable();
             $table->foreignId('measurement_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });

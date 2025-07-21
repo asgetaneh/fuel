@@ -17,8 +17,8 @@
           <table class="table table-bordered">
             <tr><th>Name</th><td>{{ $vehicle->name }}</td></tr>
             <tr><th>Type</th><td>{{ $vehicle->vehicleType->name ?? 'N/A' }}</td></tr>
-            <tr><th>Registration Number</th><td>{{ $vehicle->registration_number }}</td></tr>
-            <tr><th>Engine Number</th><td>{{ $vehicle->engine_number }}</td></tr>
+            <tr><th>plate Number</th><td>{{ $vehicle->registration_number }}</td></tr>
+            {{-- <tr><th>Engine Number</th><td>{{ $vehicle->engine_number }}</td></tr> --}}
             <tr><th>Total Seats</th><td>{{ $vehicle->total_seat }}</td></tr>
             <tr><th>Driver</th><td>{{ $vehicle->driver->name ?? 'Unassigned' }}</td></tr>
             <tr><th>Description</th><td>{{ $vehicle->description }}</td></tr>

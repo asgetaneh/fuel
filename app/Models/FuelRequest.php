@@ -25,7 +25,27 @@ class FuelRequest extends Model
         'requested_by',
         'approved_by',
         'notes',
+        'status',
     ];
+    protected $casts = [
+    'date' => 'datetime',
+    ];
+
+    // Add these methods
+    public function statusColor()
+    {
+        return match($this->status) {
+            'pending' => 'warning',
+            'approved' => 'success',
+            'rejected' => 'danger',
+            default => 'secondary',
+        };
+    }
+
+    public function isPending()
+    {
+        return $this->status === 'pending';
+    }
 
     public function vehicle()
     {
@@ -59,6 +79,13 @@ class FuelRequest extends Model
 
     public function fuelDistributions()
     {
-        return $this->hasMany(FuelDistribute::class);
+        return $this->hasMany(FuelDistributes::class);
     }
+    public function fuelPrice()
+{
+    return $this->hasOne(FuelPrice::class, 'fuel_id', 'fuel_id')
+        ->whereColumn('fuel_id', 'fuel_requests.fuel_id')
+        ->whereDate('date', '<=', DB::raw('fuel_requests.date'))
+        ->orderByDesc('date');
+}
 }

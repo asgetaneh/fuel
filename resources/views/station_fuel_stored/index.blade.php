@@ -38,6 +38,7 @@
                                         <th>Fuel</th>
                                         <th>Amount</th>
                                         <th>Date</th>
+                                        <th>Updated At</th>
                                         <th>Received By</th>
                                         <th>Notes</th>
                                         <th>Actions</th>
@@ -50,7 +51,8 @@
                                             <td>{{ $item->station->name ?? 'N/A' }}</td>
                                             <td>{{ $item->fuel->name ?? 'N/A' }}</td>
                                             <td>{{ $item->amount }}</td>
-                                            <td>{{ \Carbon\Carbon::parse($item->date)->format('Y-m-d') }}</td>
+                                            <td>{{ \Carbon\Carbon::parse(time: $item->date)->format('Y-m-d') }}</td>
+                                            <td>{{  $item->updated_at }}</td>
                                             <td>{{ $item->received_by }}</td>
                                             <td>{{ $item->notes }}</td>
                                             <td>

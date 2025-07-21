@@ -30,13 +30,13 @@
                                     <input type="number" name="price_in_ETB" id="price_in_ETB" class="form-control" step="0.01" required>
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label for="date" class="form-label">Date</label>
                                     <input type="date" name="date" id="date" class="form-control" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active">
+                                    <input class="form-check-input" type="checkbox" name="is_active" id="is_active" checked>
                                     <label class="form-check-label" for="is_active">Active</label>
                                 </div>
 

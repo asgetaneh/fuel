@@ -32,18 +32,18 @@ class VehiclePerformanceController extends Controller
             'average_km_per_litter' => 'nullable|numeric',
             'speed_per_km_hr' => 'nullable|numeric',
             'description' => 'nullable|string',
-            'date' => 'required|date',
+            // 'date' => 'required|date',
         ]);
-
+        //dd($request->all());
         VehiclePerformance::create([
             ...$request->only([
                 'vehicle_id',
                 'average_distance_km_per_hr',
                 'average_km_per_litter',
-                'speed_per_km_hr',
                 'description',
-                'date',
             ]),
+            'speed_per_km_hr' => $request->input('average_distance_km_per_hr', 0), // Default to 0 if not provided
+            'date'=> now()->toDateString(),
             'recorded_by' => Auth::id(),
         ]);
 
@@ -63,16 +63,19 @@ class VehiclePerformanceController extends Controller
 
     public function update(Request $request, VehiclePerformance $vehiclePerformance)
     {
-        $request->validate([
+        $data = $request->validate([
             'vehicle_id' => 'required|exists:vehicles,id',
             'average_distance_km_per_hr' => 'nullable|numeric',
             'average_km_per_litter' => 'nullable|numeric',
-            'speed_per_km_hr' => 'nullable|numeric',
+            // 'speed_per_km_hr' => 'nullable|numeric',
             'description' => 'nullable|string',
-            'date' => 'required|date',
+            // 'date' => 'required|date',
         ]);
+        $data['recorded_by'] = Auth::id(); // Update recorded_by to current user
+        $data['speed_per_km_hr'] = $request->input('average_distance_km_per_hr', 0); // Default to 0 if not provided
+        $data['date'] = now()->toDateString(); // Update date to current date
 
-        $vehiclePerformance->update($request->all());
+        $vehiclePerformance->update($data);
 
         return redirect()->route('vehicle-performances.index')->with('success', 'Performance updated.');
     }

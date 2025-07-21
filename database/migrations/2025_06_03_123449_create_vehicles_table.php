@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
-             $table->string('name');
+            $table->string('name')->nullable();
             $table->foreignId('vehicle_type_id')->constrained()->onDelete('cascade');
             $table->string('registration_number');
-            $table->string('engine_number');
+            $table->string('engine_number')->nullable();
             $table->integer('total_seat');
             $table->text('description')->nullable();
             $table->foreignId('driver_id')->nullable()->constrained()->onDelete('set null');

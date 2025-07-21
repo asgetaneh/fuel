@@ -16,15 +16,23 @@ use App\Http\Controllers\FuelRequestReasonController;
 use App\Http\Controllers\StationFuelStoredController;
 use App\Http\Controllers\FuelRequestController;
 use App\Http\Controllers\FuelDistributesController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FuelReportController;
+use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\UserRoleController;
+use App\Http\Controllers\PermissionController;
 
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
-Route::get('/dashboard', function () {
-    return view('home');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -45,8 +53,22 @@ Route::middleware('auth')->group(function () {
     Route::resource('trips', TripController::class);
     Route::resource('fuel-request-reasons', FuelRequestReasonController::class);
     Route::resource('station-fuel-storeds', StationFuelStoredController::class);
-    Route::resource('fuel-requests', FuelRequestController::class);
+    Route::resource('fuel-requests', controller: FuelRequestController::class);
+    Route::get('/get-vehicles-by-type/{typeId}', [VehicleController::class, 'getByType']);
+
+
+    Route::POST('fuel-requests/{fuelRequest}/approve', [FuelRequestController::class, 'approve'])->name('fuel-requests.approve');
+    Route::get('fuel-requests/{fuelRequest}/reject', [FuelRequestController::class, 'reject'])->name('fuel-requests.reject');
     Route::resource('fuel-distributes', FuelDistributesController::class);
+    Route::resource('fuel-reports', controller: FuelReportController::class);
+    Route::get('/get-vehicles-performance', [FuelReportController::class, 'efficencyReport'])->name('fuel-reports.efficency');
+    Route::resource( 'users', RegisteredUserController::class);
+    Route::post('/users/{user}/assign-role', [RegisteredUserController::class, 'assignRole'])->name('users.assignRole');
+    Route::delete('/users/{user}/remove-role/{role}', [RegisteredUserController::class, 'removeRole'])->name('users.removeRole');
+
+    Route::resource('roles', UserRoleController::class);
+    Route::resource('permissions', PermissionController::class);
+
 
 
 

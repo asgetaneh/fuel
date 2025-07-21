@@ -3,7 +3,7 @@
 @section('title', 'Edit Vehicle Performance')
 
 @section('content')
-<main class="app-main">
+<main class="app-main pt-5">
     <div class="app-content">
         <div class="container-fluid">
             <div class="row justify-content-center">
@@ -22,7 +22,7 @@
                                     <select name="vehicle_id" class="form-control" required>
                                         @foreach($vehicles as $vehicle)
                                             <option value="{{ $vehicle->id }}" {{ $vehiclePerformance->vehicle_id == $vehicle->id ? 'selected' : '' }}>
-                                                {{ $vehicle->name }}
+                                                {{ $vehicle->registration_number }} {{"("}}{{$vehicle->name ?? '-' }}{{")"}}
                                             </option>
                                         @endforeach
                                     </select>
@@ -38,20 +38,20 @@
                                     <input type="number" step="0.01" name="average_km_per_litter" class="form-control" value="{{ $vehiclePerformance->average_km_per_litter }}" required>
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label class="form-label">Speed (km/hr)</label>
                                     <input type="number" step="0.01" name="speed_per_km_hr" class="form-control" value="{{ $vehiclePerformance->speed_per_km_hr }}" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea name="description" class="form-control">{{ $vehiclePerformance->description }}</textarea>
                                 </div>
 
-                                <div class="mb-3">
+                                {{-- <div class="mb-3">
                                     <label class="form-label">Date</label>
                                     <input type="date" name="date" class="form-control" value="{{ $vehiclePerformance->date }}" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="text-end">
                                     <button type="submit" class="btn btn-primary">

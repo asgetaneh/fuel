@@ -31,8 +31,8 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Vehicle Type</th>
-                                        <th>Registration #</th>
-                                        <th>Engine #</th>
+                                        <th>Side number </th>
+                                        {{-- <th>Engine #</th> --}}
                                         <th>Total Seat</th>
                                         <th>Driver</th>
                                         <th>Active</th>
@@ -43,10 +43,10 @@
                                     @forelse($vehicles as $vehicle)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $vehicle->name }}</td>
+                                            <td>{{ $vehicle->name ?? '-'  }}</td>
                                             <td>{{ $vehicle->vehicleType->name ?? '-' }}</td>
                                             <td>{{ $vehicle->registration_number }}</td>
-                                            <td>{{ $vehicle->engine_number }}</td>
+                                            {{-- <td>{{ $vehicle->engine_number }}</td> --}}
                                             <td>{{ $vehicle->total_seat }}</td>
                                             <td>{{ $vehicle->driver->name ?? 'N/A' }}</td>
                                             <td>

@@ -26,4 +26,8 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Driver::class);
     }
+    public function fuelRequests()
+{
+    return $this->hasMany(FuelRequest::class);
+}
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fuel extends Model
 {
-    protected $fillable = ['name', 'measurement_id'];
+    protected $fillable = ['name','slug', 'description', 'measurement_id'];
 
     public function measurement()
     {

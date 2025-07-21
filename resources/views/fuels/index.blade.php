@@ -28,6 +28,7 @@
                                         <th>#</th>
                                         <th>Name</th>
                                         <th>Measurement</th>
+                                        {{-- <th>Slug</th> --}}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -37,6 +38,7 @@
                                             <td>{{ $loop->iteration }}</td>
                                             <td>{{ $fuel->name }}</td>
                                             <td>{{ $fuel->measurement->name ?? 'N/A' }}</td>
+                                            {{-- <td>{{ $fuel->slug }}</td> --}}
                                             <td>
                                                 <a href="{{ route('fuels.show', $fuel->id) }}" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>
                                                 <a href="{{ route('fuels.edit', $fuel->id) }}" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>

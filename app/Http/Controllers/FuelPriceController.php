@@ -25,14 +25,14 @@ class FuelPriceController extends Controller
         $request->validate([
             'price_in_ETB' => 'required|numeric',
             'fuel_id' => 'required|exists:fuels,id',
-            'date' => 'required|date',
-            'is_active' => 'nullable|boolean',
+            //'date' => 'required|date',
+           // 'is_active' => 'nullable|boolean',
         ]);
-
+       // dd($request->all());
         FuelPrice::create([
             'price_in_ETB' => $request->price_in_ETB,
             'fuel_id' => $request->fuel_id,
-            'date' => $request->date,
+            'date' => now()->toDateString(),
             'is_active' => $request->has('is_active'),
         ]);
 
@@ -55,14 +55,14 @@ class FuelPriceController extends Controller
         $request->validate([
             'price_in_ETB' => 'required|numeric',
             'fuel_id' => 'required|exists:fuels,id',
-            'date' => 'required|date',
-            'is_active' => 'nullable|boolean',
+            //'date' => 'required|date',
+            //'is_active' => 'nullable|boolean',
         ]);
 
         $fuelPrice->update([
             'price_in_ETB' => $request->price_in_ETB,
             'fuel_id' => $request->fuel_id,
-            'date' => $request->date,
+            'date' => now()->toDateString(),
             'is_active' => $request->has('is_active'),
         ]);
 

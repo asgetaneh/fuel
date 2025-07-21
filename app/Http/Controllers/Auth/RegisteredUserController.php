@@ -11,9 +11,16 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Spatie\Permission\Models\Role;
 
 class RegisteredUserController extends Controller
 {
+    public function index(): View
+    {
+        $users = User::paginate(10);
+        $roles = Role::all();
+        return view('users.index', compact('users', 'roles'));
+    }
     /**
      * Display the registration view.
      */
@@ -32,11 +39,13 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'username' => ['required', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'username' => $request->username,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
@@ -47,4 +56,21 @@ class RegisteredUserController extends Controller
 
         return redirect(route('dashboard', absolute: false));
     }
+    public function assignRole(Request $request, User $user)
+    {
+        $request->validate([
+            'role' => 'required|exists:roles,name',
+        ]);
+
+        $user->syncRoles([$request->role]);
+
+        return back()->with('success', 'Role assigned successfully.');
+    }
+    public function removeRole(User $user, Role $role)
+    {
+        $user->removeRole($role);
+
+        return back()->with('success', 'Role removed successfully.');
+    }
+
 }

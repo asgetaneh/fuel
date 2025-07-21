@@ -24,6 +24,7 @@ class FuelController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'slug' => 'required|string|max:255|unique:fuels,slug',
             'measurement_id' => 'required|exists:measurements,id',
         ]);
 

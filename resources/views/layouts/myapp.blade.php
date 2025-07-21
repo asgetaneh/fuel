@@ -65,7 +65,9 @@
         background-color: #e6f0ff !important;
         color: #003865 !important;
       }
-
+      .card-body canvas {
+        min-height: 100px !important;
+    }
 
     </style>
   </head>
@@ -261,6 +263,7 @@
     </script>
     <!--end::Script-->
     @stack('scripts')
+    @yield('scripts')
   </body>
   <!--end::Body-->
 </html>

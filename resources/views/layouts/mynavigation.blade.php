@@ -154,8 +154,10 @@
                   class="user-image rounded-circle shadow"
                   alt="User Image"
                 /> --}}
-                <span class="d-none d-md-inline"><h6> {{ Auth::user()->name ?? 'Guest' }}</h6></span>
-              </a>
+                    <span class="d-none d-md-inline">
+                        <h6>{{ auth()->user()->name ?? 'Guest' }}</h6>
+                    </span>
+                </a>
               <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
                 <!--begin::User Image-->
                 <li class="user-header text-bg-primary">
