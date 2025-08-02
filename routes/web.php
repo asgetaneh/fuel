@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('fuel-distributes', FuelDistributesController::class);
     Route::resource('fuel-reports', controller: FuelReportController::class);
     Route::get('/get-vehicles-performance', [FuelReportController::class, 'efficencyReport'])->name('fuel-reports.efficency');
+    Route::get('/fuel-report/export', [FuelReportController::class, 'export'])->name('fuel-report.export');
     Route::resource( 'users', RegisteredUserController::class);
     Route::post('/users/{user}/assign-role', [RegisteredUserController::class, 'assignRole'])->name('users.assignRole');
     Route::delete('/users/{user}/remove-role/{role}', [RegisteredUserController::class, 'removeRole'])->name('users.removeRole');

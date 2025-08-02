@@ -157,7 +157,7 @@
                     </ul>
                 </li>
                 @endrole
-                @role('admin')
+                {{-- @role('admin') --}}
                 <!-- Reports -->
                 <li class="nav-item {{ $isReportMenu ? 'menu-open' : '' }}">
                     <a href="#" class="nav-link {{ $isReportMenu ? 'active' : '' }}">
@@ -213,7 +213,7 @@
                         </li>
                     </ul>
                 </li>
-                @endrole
+                {{-- @endrole --}}
                 <!-- Logout -->
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link">

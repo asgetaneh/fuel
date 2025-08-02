@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use App\Models\FuelPrice;
 use Illuminate\Pagination\LengthAwarePaginator;
 use App\Models\VehiclePerformance;
+use App\Exports\FuelEfficiencyExport; // custom export class
 
 class FuelReportController extends Controller
 {
@@ -76,9 +77,9 @@ class FuelReportController extends Controller
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
-            if ($request->has('export') && $request->export === 'excel') {
-                return Excel::download(new FuelReportExport($data), 'fuel_summary_report.xlsx');
-            }
+            // if ($request->has('export') && $request->export === 'excel') {
+            //     return Excel::download(new FuelReportExport($data), 'fuel_summary_report.xlsx');
+            // }
 
         return view('reports.fuel_summary', compact('data', 'vehicles', 'fuels'));
     }
@@ -197,52 +198,123 @@ class FuelReportController extends Controller
     {
         //
     }
-    public function efficencyReport(Request $request)
-    {
-       $vehicles = Vehicle::all();
 
-        $query = FuelRequest::with('vehicle');
+public function efficencyReport(Request $request)
+{
+    $vehicles = Vehicle::all();
 
-        if ($request->filled('vehicle_id')) {
-            $query->where('vehicle_id', $request->vehicle_id);
-        }
+    $query = FuelRequest::with('vehicle');
 
-        if ($request->filled('from_date') && $request->filled('to_date')) {
-            $query->whereBetween('date', [
-                Carbon::parse($request->from_date)->startOfDay(),
-                Carbon::parse($request->to_date)->endOfDay()
-            ]);
-        }
+    if ($request->filled('vehicle_id')) {
+        $query->where('vehicle_id', $request->vehicle_id);
+    }
 
-        $fuelRequests = $query->get();
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $query->whereBetween('date', [
+            Carbon::parse($request->from_date)->startOfDay(),
+            Carbon::parse($request->to_date)->endOfDay()
+        ]);
+    }
 
-        $report = [];
+    $fuelRequests = $query->orderBy('vehicle_id')->orderBy('date')->get();
 
-        foreach ($fuelRequests->groupBy('vehicle_id') as $vehicleId => $records) {
-            $vehicle = $records->first()->vehicle;
+    $report = [];
 
-            $total_km = $records->sum('total_km_covered_by_vehicle');
-            $total_fuel = $records->sum('amount');
+    foreach ($fuelRequests->groupBy('vehicle_id') as $vehicleId => $records) {
+        $vehicle = $records->first()->vehicle;
 
-            $actual_km_per_l = $total_fuel > 0 ? $total_km / $total_fuel : 0;
+        // Get expected performance once per vehicle
+        $performance = VehiclePerformance::where('vehicle_id', $vehicleId)
+                        ->orderByDesc('date')
+                        ->first();
 
-            // Get the latest vehicle performance record
-            $performance = VehiclePerformance::where('vehicle_id', $vehicleId)
-                            ->orderByDesc('date')
-                            ->first();
+        $expected_km_per_l = $performance?->average_km_per_litter ?? null;
 
-            $expected_km_per_l = $performance?->average_km_per_litter ?? null;
+        $previousRequest = null;
+
+        foreach ($records as $index => $request) {
+            $actual_km_per_l = null;
+            $variance = null;
+            $km_covered = null;
+            $fuel_used = null;
+
+            if ($previousRequest) {
+                $km_covered = $request->total_km_covered_by_vehicle - $previousRequest->total_km_covered_by_vehicle;
+                $fuel_used = $previousRequest->amount;
+
+                if ($fuel_used > 0 && $km_covered >= 0) {
+                    $actual_km_per_l = $km_covered / $fuel_used;
+                    $variance = $expected_km_per_l !== null ? $actual_km_per_l - $expected_km_per_l : null;
+                }
+            }
 
             $report[] = [
+                'date' => $request->date->format('Y-m-d'),
+                'createdAt' => $request->created_at->format('Y-m-d\TH:i'),
                 'vehicle' => $vehicle->name . ' (' . $vehicle->registration_number . ')',
                 'expected_km_per_l' => $expected_km_per_l,
                 'actual_km_per_l' => $actual_km_per_l,
-                'variance' => $expected_km_per_l !== null ? $actual_km_per_l - $expected_km_per_l : null,
-                'total_km' => $total_km,
-                'total_fuel' => $total_fuel,
+                'variance' => $variance,
+                'km_covered' => $km_covered,
+                'fuel_used' => $fuel_used,
             ];
-        }
 
-        return view('reports.actual_vs_expected_fuel_efficiency', compact('report', 'vehicles'));
+            $previousRequest = $request;
+        }
     }
+
+    // if ($request->has('export') && $request->export === 'excel') {
+    //     return Excel::download(new FuelEfficiencyExport($report), 'fuel_efficiency_report.xlsx');
+    // }
+
+    return view('reports.actual_vs_expected_fuel_efficiency', compact('report', 'vehicles'));
+}
+
+    public function export(Request $request)
+{
+    $query = FuelRequest::with('vehicle');
+
+    if ($request->filled('vehicle_id')) {
+        $query->where('vehicle_id', $request->vehicle_id);
+    }
+
+    if ($request->filled('from_date') && $request->filled('to_date')) {
+        $query->whereBetween('date', [
+            Carbon::parse($request->from_date)->startOfDay(),
+            Carbon::parse($request->to_date)->endOfDay()
+        ]);
+    }
+
+    $fuelRequests = $query->get();
+
+    $report = collect(); // collect data here
+
+    foreach ($fuelRequests->groupBy('vehicle_id') as $vehicleId => $records) {
+        $vehicle = $records->first()->vehicle;
+
+        $total_km = $records->sum('total_km_covered_by_vehicle');
+        $total_fuel = $records->sum('amount');
+
+        $actual_km_per_l = $total_fuel > 0 ? $total_km / $total_fuel : 0;
+
+        $performance = VehiclePerformance::where('vehicle_id', $vehicleId)
+                        ->orderByDesc('date')
+                        ->first();
+
+        $expected_km_per_l = $performance?->average_km_per_litter ?? null;
+
+        $report->push([
+            'vehicle' => $vehicle->name . ' (' . $vehicle->registration_number . ')',
+            'expected_km_per_l' => $expected_km_per_l,
+            'actual_km_per_l' => $actual_km_per_l,
+            'variance' => $expected_km_per_l !== null ? $actual_km_per_l - $expected_km_per_l : null,
+            'total_km' => $total_km,
+            'total_fuel' => $total_fuel,
+        ]);
+    }
+
+    return Excel::download(new FuelEfficiencyExport($report), 'fuel_efficiency_report.xlsx');
+}
+
+
 }
